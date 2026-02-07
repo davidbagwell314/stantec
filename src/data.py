@@ -1,8 +1,15 @@
-import csv
+import os
 
-if __name__ == "__main__":
-    file = open("data/bulk.csv")
-    reader = csv.reader(file)
-    for row in reader:
-        for element in row:
-            print(element)
+data_path = r"GIS\shapes"
+
+zone_files: dict[str, str] = {}
+
+for root, dirs, files in os.walk(data_path):
+    for n in files:
+        name, extension = os.path.splitext(n)
+        if extension == ".shp":
+            fp = os.path.join(root, n)
+            zone_files.update({name: fp})
+    break
+
+print(zone_files)

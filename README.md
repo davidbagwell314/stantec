@@ -5,8 +5,14 @@ GIS files (in `GIS/`) are modified with QGIS - install QGIS if you want to modif
 
 `zones.py` requires the shapefile module - use `pip install pyshp`
 
+# Large files
 
-Please download `wu03ew_v2.csv` from https://statistics.ukdataservice.ac.uk/dataset/wu03ew-2011-msoamsoa-location-usual-residence-and-place-work-method-travel-work and add the file to `data/`
+When downloading the following, add the files to `data/`. This may involve extracting the file from z `.zip` file.
+
+Download `wu03ew_v2.csv` from https://statistics.ukdataservice.ac.uk/dataset/wu03ew-2011-msoamsoa-location-usual-residence-and-place-work-method-travel-work
+
+
+Download `dft_traffic_counts_raw_counts.csv` from https://roadtraffic.dft.gov.uk/downloads
 
 # Repository structure
 
