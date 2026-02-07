@@ -31,5 +31,5 @@ def view_shapefile_fields(shapefile_path):
         print(f"Unexpected error: {e}")
 
 if __name__ == "__main__":
-    shapefile_path = "GIS/taunton.shp"
+    shapefile_path = "GIS/shapes/exeter.shp"
     view_shapefile_fields(shapefile_path)
