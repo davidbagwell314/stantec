@@ -1,8 +1,13 @@
 import shapefile
+import pandas as pd
 import os
 import sys
 
-def get_shapefile_records(shapefile_path):
+def error(msg: str = "") -> None:
+    print(msg)
+    exit()
+
+def get_shapefile_records(shapefile_path: (str | os.PathLike[str])) -> (pd.DataFrame | None):
     try:
         # Check shapefile exists
         if not os.path.exists(shapefile_path):
@@ -11,19 +16,21 @@ def get_shapefile_records(shapefile_path):
         # Read shapefile
         sf = shapefile.Reader(shapefile_path)
 
+        # Extract field names (excluding the first deletion flag field)
         fields = [field[0] for field in sf.fields[1:]]
-        records = []
-        records_raw = sf.records()
 
-        for record in records_raw:
-            records.append(dict(zip(fields, record)))
+        # Extract records (attribute data)
+        records = [list(record) for record in sf.records()]
+
+        # Create a DataFrame with fields and records
+        df = pd.DataFrame(records, columns=fields)
   
-        return records
+        return df
 
     except shapefile.ShapefileException as e:
-        print(f"Error reading shapefile: {e}")
+        error(f"Error reading shapefile: {e}")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        error(f"Unexpected error: {e}")
 
     return None
 
@@ -59,7 +66,9 @@ if __name__ == "__main__":
     data_path = r"GIS\shapes"
 
     zone_files: dict[str, str] = {}
+    zones: dict[str, pd.DataFrame] = {}
 
+    # Find the shapefiles for each zone
     for root, dirs, files in os.walk(data_path):
         for n in files:
             name, extension = os.path.splitext(n)
@@ -68,10 +77,15 @@ if __name__ == "__main__":
                 zone_files.update({name: fp})
         break
 
-    print(zone_files)
+    # Display all rows of the dataframe
+    pd.set_option('display.max_rows', None)
 
     for name, file in zone_files.items():
         print(f"{name}:")
-        records = get_shapefile_records(file)
-        print(records)
-        #view_fields(file)
+        df = get_shapefile_records(file)
+        if df is None:
+            print(f"No records found for {name}")
+        else:
+            zones.update({name: df})
+            print(df.to_string(index=False))
+            print()
