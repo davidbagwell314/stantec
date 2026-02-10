@@ -1,5 +1,7 @@
 import shapefile
 import pandas as pd
+import duckdb
+import csv
 import os
 import sys
 
@@ -62,6 +64,49 @@ def view_shapefile_fields(shapefile_path):
     except Exception as e:
         print(f"Unexpected error: {e}")
 
+def fetch_wu03ew(residence):
+    csv_src = 'data/wu03ew_v2.csv'
+
+    con = duckdb.connect()
+
+    # Get column names
+    header = ["residence","workplace","all","home","metro","train","bus","taxi","motorcycle","driving","passenger","bicycle","foot","other"]
+
+    # All columns are VARCHAR type
+    schema = {col: "VARCHAR" for col in header}
+
+    # Fetch all required data
+    return con.execute(
+        f"""SELECT * 
+            FROM read_csv_auto('{csv_src}', columns={schema})
+            WHERE residence = '{residence}'
+        """
+    ).fetchdf()
+
+def fetch_MSOA_PWC(codes):
+    csv_src = 'data/MSOA_Dec_2011_PWC_in_England_and_Wales_2022_-7657754233007660732.csv'
+
+    con = duckdb.connect()
+        
+    # Get column names
+    with open(csv_src, newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        header = next(reader)
+
+    # All columns are VARCHAR type
+    schema = {col: "VARCHAR" for col in header}
+
+    df = pd.DataFrame({'code': codes})
+    con.register("codes", df)
+
+    # Fetch all required data
+    return con.execute(
+        f"""SELECT * 
+            FROM read_csv_auto('{csv_src}', columns={schema})
+            WHERE MSOA11CD IN (SELECT code FROM codes)
+        """
+    ).fetchdf()
+
 if __name__ == "__main__":
     data_path = r"GIS\shapes"
 
@@ -89,3 +134,22 @@ if __name__ == "__main__":
             zones.update({name: df})
             print(df.to_string(index=False))
             print()
+
+    for row in zones["taunton"].itertuples(index=False):
+        # Location of residence, location of workplace, number of people by method of travel
+        wu03ew_table = fetch_wu03ew(row.MSOA11CD)
+        print(wu03ew_table.head())
+        print()
+
+        # List of all workplace locations for this location of residence
+        workplace_list = [wu03ew_row.workplace for wu03ew_row in wu03ew_table.itertuples(index=False)]
+
+        # Population-weighted centroid for location of residence
+        residence_pwc = fetch_MSOA_PWC([row.MSOA11CD])
+        print(residence_pwc.head())
+        print()
+
+        # Population-weighted centroid for location of workplace
+        workplace_pwc = fetch_MSOA_PWC(workplace_list)
+        print(workplace_pwc.head())
+        print()
