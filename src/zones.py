@@ -135,6 +135,9 @@ if __name__ == "__main__":
             print(df.to_string(index=False))
             print()
 
+    journeys: dict[tuple[str, str], tuple] = {}
+    distances: dict[tuple[str, str], float] = {}
+
     for row in zones["taunton"].itertuples(index=False):
         # Location of residence, location of workplace, number of people by method of travel
         wu03ew_table = fetch_wu03ew(row.MSOA11CD)
@@ -142,7 +145,18 @@ if __name__ == "__main__":
         print()
 
         # List of all workplace locations for this location of residence
-        workplace_list = [wu03ew_row.workplace for wu03ew_row in wu03ew_table.itertuples(index=False)]
+        workplace_list = []
+
+        # "residence","workplace","all","home","metro","train","bus","taxi","motorcycle","driving","passenger","bicycle","foot","other"
+        for wu03ew_row in wu03ew_table.itertuples(index=False):
+            data = tuple([int(str(x)) for i, x in enumerate(wu03ew_row) if i > 1])
+            if data[0] > 5:
+                journeys[(str(wu03ew_row.residence), str(wu03ew_row.workplace))] = data
+                workplace_list.append(str(wu03ew_row.workplace))
+
+        print(workplace_list)
+        print(journeys)
+        print(len(journeys))
 
         # Population-weighted centroid for location of residence
         residence_pwc = fetch_MSOA_PWC([row.MSOA11CD])
@@ -153,3 +167,14 @@ if __name__ == "__main__":
         workplace_pwc = fetch_MSOA_PWC(workplace_list)
         print(workplace_pwc.head())
         print()
+
+        x1, y1 = float(residence_pwc.iloc[0].x), float(residence_pwc.iloc[0].y)
+        for pwc in workplace_pwc.iloc:
+            x2, y2 = float(pwc.x), float(pwc.y)
+            dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+            #print(f"{pwc.MSOA11CD}: {dist}")
+            distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = dist
+
+        break
+
+    print(distances)
