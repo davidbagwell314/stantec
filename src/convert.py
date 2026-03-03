@@ -1,4 +1,14 @@
 from pyproj import Transformer
+import csv
+
+DATASET_PATH = r"PATH_TO_MSOA_LOCATIONS_CSV"
+
+def extract_csv(path):
+    file = open(path, "r")
+    reader = csv.reader(file)
+    dataList = list(reader)
+    dataList.pop(0)
+    return dataList
 
 def convert_easting_northing_to_latlon(easting, northing):
     """
@@ -20,6 +30,11 @@ def convert_easting_northing_to_latlon(easting, northing):
         raise ValueError(f"Conversion failed: {e}")
 
 if __name__ == "__main__":
-    for easting, northing in [(321073.132, 123303.778000001), (291712.971,90432.4069999997)]:
+    dataset = extract_csv(DATASET_PATH)
+    coords = []
+    for i in range(len(dataset)):
+        coord = tuple(dataset[i][4:])
+        coords.append(coord)
+    for easting, northing in coords:
         lat, lon = convert_easting_northing_to_latlon(easting, northing)
         print(f"{lat:.8f}, {lon:.8f}")
