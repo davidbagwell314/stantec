@@ -4,6 +4,7 @@ import duckdb
 import csv
 import os
 import sys
+import convert
 
 def error(msg: str = "") -> None:
     print(msg)
@@ -125,6 +126,7 @@ if __name__ == "__main__":
     # Display all rows of the dataframe
     pd.set_option('display.max_rows', None)
 
+    # Get records for each zone
     for name, file in zone_files.items():
         print(f"{name}:")
         df = get_shapefile_records(file)
@@ -135,46 +137,68 @@ if __name__ == "__main__":
             print(df.to_string(index=False))
             print()
 
-    journeys: dict[tuple[str, str], tuple] = {}
-    distances: dict[tuple[str, str], float] = {}
+    # Info about zone_data dictionary:
+    # Key = name of zone (e.g. 'bridgwater')
+    # Value = tuple of journeys and distances
 
-    for row in zones["taunton"].itertuples(index=False):
-        # Location of residence, location of workplace, number of people by method of travel
-        wu03ew_table = fetch_wu03ew(row.MSOA11CD)
-        print(wu03ew_table.head())
-        print()
+    # Info about journeys dictionary:
+    # Key = tuple of origin and destination MSOA codes
+    # Value = tuple of number of people on various modes of transport (from wu03ew table)
 
-        # List of all workplace locations for this location of residence
-        workplace_list = []
+    # Info about distances dictionary:
+    # Key = tuple of origin and destination MSOA codes
+    # Value = tuple of latitude and longitude of both origin and destination, and straight-line distance between these (metres)
 
-        # "residence","workplace","all","home","metro","train","bus","taxi","motorcycle","driving","passenger","bicycle","foot","other"
-        for wu03ew_row in wu03ew_table.itertuples(index=False):
-            data = tuple([int(str(x)) for i, x in enumerate(wu03ew_row) if i > 1])
-            if data[0] > 5:
-                journeys[(str(wu03ew_row.residence), str(wu03ew_row.workplace))] = data
-                workplace_list.append(str(wu03ew_row.workplace))
+    zone_data = {}
 
-        print(workplace_list)
-        print(journeys)
-        print(len(journeys))
+    for name, zone in zones.items():
+        # key for both is the residence MSOA and the workplace MSOA
+        journeys: dict[tuple[str, str], tuple] = {} # value is data from wu03ew
+        distances: dict[tuple[str, str], tuple[str, str, float]] = {} # value is easting and northing for residence and workplace, as well as distance (m)
 
-        # Population-weighted centroid for location of residence
-        residence_pwc = fetch_MSOA_PWC([row.MSOA11CD])
-        print(residence_pwc.head())
-        print()
+        for row in zone.itertuples(index=False):
+            # Location of residence, location of workplace, number of people by method of travel
+            wu03ew_table = fetch_wu03ew(row.MSOA11CD)
+            # print(wu03ew_table.head())
+            # print()
 
-        # Population-weighted centroid for location of workplace
-        workplace_pwc = fetch_MSOA_PWC(workplace_list)
-        print(workplace_pwc.head())
-        print()
+            # List of all workplace locations for this location of residence
+            workplace_list = []
 
-        x1, y1 = float(residence_pwc.iloc[0].x), float(residence_pwc.iloc[0].y)
-        for pwc in workplace_pwc.iloc:
-            x2, y2 = float(pwc.x), float(pwc.y)
-            dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
-            #print(f"{pwc.MSOA11CD}: {dist}")
-            distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = dist
+            # "residence","workplace","all","home","metro","train","bus","taxi","motorcycle","driving","passenger","bicycle","foot","other"
+            for wu03ew_row in wu03ew_table.itertuples(index=False):
+                data = tuple([int(str(x)) for i, x in enumerate(wu03ew_row) if i > 1])
+                if data[0] > 5:
+                    journeys[(str(wu03ew_row.residence), str(wu03ew_row.workplace))] = data
+                    workplace_list.append(str(wu03ew_row.workplace))
 
-        break
+            # print(workplace_list)
+            # print(journeys)
+            # print(len(journeys))
 
-    print(distances)
+            # Population-weighted centroid for location of residence
+            residence_pwc = fetch_MSOA_PWC([row.MSOA11CD])
+            # print(residence_pwc.head())
+            # print()
+
+            # Population-weighted centroid for location of workplace
+            workplace_pwc = fetch_MSOA_PWC(workplace_list)
+            # print(workplace_pwc.head())
+            # print()
+
+            x1, y1 = float(residence_pwc.iloc[0].x), float(residence_pwc.iloc[0].y)
+            for pwc in workplace_pwc.iloc:
+                x2, y2 = float(pwc.x), float(pwc.y)
+                dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+                src = convert.convert_easting_northing_to_latlon(x1, y1)
+                dest = convert.convert_easting_northing_to_latlon(x2, y2)
+                distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = (f"{src[0]}, {src[1]}", f"{dest[0]}, {dest[1]}", dist)
+
+        zone_data[name] = (journeys, distances)
+
+    print(zone_data)
+
+    """for item in distances.items():
+        key = item[0]
+        value = item[1]
+        print(f"{key[0]} to {key[1]}: {value[0]} to {value[1]}")"""
