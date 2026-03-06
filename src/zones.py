@@ -108,7 +108,7 @@ def fetch_MSOA_PWC(codes):
         """
     ).fetchdf()
 
-if __name__ == "__main__":
+def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], tuple[dict[str, tuple[float, float]], dict[str, tuple[float, float]]]]]:
     data_path = r"GIS\shapes"
 
     zone_files: dict[str, str] = {}
@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
     # Info about zone_data dictionary:
     # Key = name of zone (e.g. 'bridgwater')
-    # Value = tuple of journeys and distances
+    # Value = tuple of journeys, distances, and locations
 
     # Info about journeys dictionary:
     # Key = tuple of origin and destination MSOA codes
@@ -149,12 +149,18 @@ if __name__ == "__main__":
     # Key = tuple of origin and destination MSOA codes
     # Value = tuple of latitude and longitude of both origin and destination, and straight-line distance between these (metres)
 
+    # Info about locations dictionary:
+    # Key = MSOA code
+    # Value = tuple of latitude and longitude
+
     zone_data = {}
 
     for name, zone in zones.items():
         # key for both is the residence MSOA and the workplace MSOA
         journeys: dict[tuple[str, str], tuple] = {} # value is data from wu03ew
-        distances: dict[tuple[str, str], tuple[str, str, float]] = {} # value is easting and northing for residence and workplace, as well as distance (m)
+        distances: dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]] = {} # value is easting and northing for residence and workplace, as well as distance (m)
+
+        locations: dict[str, dict[str, tuple[float, float]]] = {"origin": {}, "destination": {}}
 
         for row in zone.itertuples(index=False):
             # Location of residence, location of workplace, number of people by method of travel
@@ -168,7 +174,7 @@ if __name__ == "__main__":
             # "residence","workplace","all","home","metro","train","bus","taxi","motorcycle","driving","passenger","bicycle","foot","other"
             for wu03ew_row in wu03ew_table.itertuples(index=False):
                 data = tuple([int(str(x)) for i, x in enumerate(wu03ew_row) if i > 1])
-                if data[0] > 5:
+                if data[0] > num_journeys:
                     journeys[(str(wu03ew_row.residence), str(wu03ew_row.workplace))] = data
                     workplace_list.append(str(wu03ew_row.workplace))
 
@@ -192,10 +198,16 @@ if __name__ == "__main__":
                 dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
                 src = convert.convert_easting_northing_to_latlon(x1, y1)
                 dest = convert.convert_easting_northing_to_latlon(x2, y2)
-                distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = (f"{src[0]}, {src[1]}", f"{dest[0]}, {dest[1]}", dist)
+                distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = (src, dest, dist)
+                locations["origin"][str(residence_pwc.iloc[0].MSOA11CD)] = src
+                locations["destination"][str(pwc.MSOA11CD)] = dest
 
-        zone_data[name] = (journeys, distances)
+        zone_data[name] = (journeys, distances, locations)
 
+    return zone_data
+
+if __name__ == "__main__":
+    zone_data = get_zone_data(15)
     print(zone_data)
 
     """for item in distances.items():
