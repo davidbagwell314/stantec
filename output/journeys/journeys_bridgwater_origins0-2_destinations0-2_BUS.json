@@ -1,0 +1,72 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.132585900329445,
+                        "longitude": -2.982883702537558
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.13227389001245,
+                        "longitude": -3.0050121669339918
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.11884459095183,
+                        "longitude": -3.0066512126290297
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.13227389001245,
+                        "longitude": -3.0050121669339918
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.00964847653424,
+                        "longitude": -3.105351880372991
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.149883444131426,
+                        "longitude": -3.290880554269522
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "TRANSIT",
+    "transitPreferences": {
+        "allowedTravelModes": [
+            "BUS"
+        ]
+    }
+}

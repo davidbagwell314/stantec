@@ -1,0 +1,82 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.03202346116344,
+                        "longitude": -3.1084247384979844
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.022947727644315,
+                        "longitude": -3.1032769050330207
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.02138573665727,
+                        "longitude": -3.1370343413460016
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.455221264382416,
+                        "longitude": -2.581867184843602
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.45414945341986,
+                        "longitude": -2.600854414670557
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.72434823113571,
+                        "longitude": -3.532524126884802
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.02138573665727,
+                        "longitude": -3.1370343413460016
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "TRANSIT",
+    "transitPreferences": {
+        "allowedTravelModes": [
+            "TRAIN"
+        ]
+    }
+}

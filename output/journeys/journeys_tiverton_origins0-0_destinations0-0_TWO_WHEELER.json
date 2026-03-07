@@ -1,0 +1,27 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.91279873535227,
+                        "longitude": -3.4777193182561996
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.90261565580501,
+                        "longitude": -3.4925160776283253
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "TWO_WHEELER"
+}

@@ -59,23 +59,47 @@ def read_json_file(file_path):
     return None
 
 if __name__ == "__main__":
+    modes: dict[str, list[int]] = {"DRIVE": [5, 7, 8], "BICYCLE": [9], "WALK": [10], "TWO_WHEELER": [6], "BUS": [4], "TRAIN": [3]}
     if False:
-        data = zones.get_zone_data(15)
+        num_journeys = 10
+        data = zones.get_zone_data(1)
 
-        locations: dict[str, tuple] = {}
+        print(data)
+
+        locations: dict[str, dict[str, dict[str, dict[str, tuple[float, float]]]]] = {}
 
         for name, zone_data in data.items():
-            locations[name] = zone_data[2]
+            locations[name] = {}
+            for mode, idx in modes.items():
+                locations[name][mode] = {"origin": {}, "destination": {}}
+                for journey, people in zone_data[0].items():
+                    if journey[0] in zone_data[2] and journey[1] in zone_data[2]:
+                        print(journey)
+
+                        # check if enough people are doing the journey by this mode of transport
+                        journey_exists = False
+                        for i in idx:
+                            if people[i] >= num_journeys:
+                                journey_exists = True
+                                break
+
+                        if journey_exists:
+                            locations[name][mode]["origin"][journey[0]] = zone_data[2][journey[0]]
+                            locations[name][mode]["destination"][journey[1]] = zone_data[2][journey[1]]
 
             # distances = {k: v for k, v in sorted(zone[1].items(), key=lambda x: zone[0][x[0]][0])}
             # journeys = zone[0]
-        
-        save_to_json(locations, "output/locations.json")
-    else:
-        locations: dict[str, dict[str, dict[str, tuple[float, float]]]] = read_json_file("output/locations.json")
 
-        for mode in ["DRIVE", "BICYCLE", "WALK", "TWO_WHEELER", "BUS", "TRAIN"]:
-            for name, zone_data in locations.items():
+        print(locations)
+        save_to_json(locations, "output/data.json")
+        
+        # save_to_json(locations, "output/locations.json")
+    else:
+        locations: dict[str, dict[str, dict[str, dict[str, tuple[float, float]]]]] = read_json_file("output/data.json")
+
+        # for mode in ["DRIVE", "BICYCLE", "WALK", "TWO_WHEELER", "BUS", "TRAIN"]:
+        for name, data in locations.items():
+            for mode, zone_data in data.items():
                 size = 0
                 mode_name = mode
 
@@ -85,50 +109,52 @@ if __name__ == "__main__":
                 else:
                     size = 25
 
-                zone_data = locations[name]
+                #zone_data = locations[name][mode]
 
                 total_num_origins = len(zone_data["origin"])
                 total_num_destinations = len(zone_data["destination"])
-                num_origins, num_destinations = 0, 0
 
-                if total_num_origins < size:
-                    num_origins = total_num_origins
-                    num_destinations = (size * size) // total_num_origins
-                elif total_num_destinations < size:
-                    num_destinations = total_num_destinations
-                    num_origins = (size * size) // total_num_destinations
-                else:
-                    num_origins = size
-                    num_destinations = size
+                if total_num_origins > 0 and total_num_destinations > 0:
+                    num_origins, num_destinations = 0, 0
 
-                if total_num_origins < num_origins:
-                    num_origins = total_num_origins
-                if total_num_destinations < num_destinations:
-                    num_destinations = total_num_destinations
+                    if total_num_origins < size:
+                        num_origins = total_num_origins
+                        num_destinations = (size * size) // total_num_origins
+                    elif total_num_destinations < size:
+                        num_destinations = total_num_destinations
+                        num_origins = (size * size) // total_num_destinations
+                    else:
+                        num_origins = size
+                        num_destinations = size
 
-                for origins_start in range(0, total_num_origins, num_origins):
-                    for destinations_start in range(0, total_num_destinations, num_destinations):
-                        origins = []
-                        destinations = []
+                    if total_num_origins < num_origins:
+                        num_origins = total_num_origins
+                    if total_num_destinations < num_destinations:
+                        num_destinations = total_num_destinations
 
-                        origins_end = origins_start + num_origins
-                        destinations_end = destinations_start + num_destinations
+                    for origins_start in range(0, total_num_origins, num_origins):
+                        for destinations_start in range(0, total_num_destinations, num_destinations):
+                            origins = []
+                            destinations = []
 
-                        if origins_end > total_num_origins - 1:
-                            origins_end = total_num_origins - 1
+                            origins_end = origins_start + num_origins
+                            destinations_end = destinations_start + num_destinations
 
-                        if destinations_end > total_num_destinations - 1:
-                            destinations_end = total_num_destinations - 1
+                            if origins_end > total_num_origins - 1:
+                                origins_end = total_num_origins - 1
 
-                        for location in list(zone_data["origin"].values())[:num_origins]:
-                            origins.append({"waypoint": {"location": {"latLng": {"latitude": location[0], "longitude": location[1]}}}})
+                            if destinations_end > total_num_destinations - 1:
+                                destinations_end = total_num_destinations - 1
 
-                        for location in list(zone_data["destination"].values())[:num_destinations]:
-                            destinations.append({"waypoint": {"location": {"latLng": {"latitude": location[0], "longitude": location[1]}}}})
+                            for location in list(zone_data["origin"].values())[:num_origins]:
+                                origins.append({"waypoint": {"location": {"latLng": {"latitude": location[0], "longitude": location[1]}}}})
 
-                        journey_data = {"origins": origins, "destinations": destinations, "travelMode": mode_name}
-                        
-                        if mode_name == "TRANSIT":
-                            journey_data["transitPreferences"] = {"allowedTravelModes": [mode]}
+                            for location in list(zone_data["destination"].values())[:num_destinations]:
+                                destinations.append({"waypoint": {"location": {"latLng": {"latitude": location[0], "longitude": location[1]}}}})
 
-                        save_to_json(journey_data, f"output/journeys/journeys_{name}_origins{origins_start}-{origins_end}_destinations{destinations_start}-{destinations_end}_{mode}.json")
+                            journey_data = {"origins": origins, "destinations": destinations, "travelMode": mode_name}
+                            
+                            if mode_name == "TRANSIT":
+                                journey_data["transitPreferences"] = {"allowedTravelModes": [mode]}
+
+                            save_to_json(journey_data, f"output/journeys/journeys_{name}_origins{origins_start}-{origins_end}_destinations{destinations_start}-{destinations_end}_{mode}.json")

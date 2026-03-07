@@ -1,0 +1,27 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.855901738695714,
+                        "longitude": -3.3948108415986558
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.855901738695714,
+                        "longitude": -3.3948108415986558
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "WALK"
+}

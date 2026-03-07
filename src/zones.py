@@ -108,7 +108,7 @@ def fetch_MSOA_PWC(codes):
         """
     ).fetchdf()
 
-def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], tuple[dict[str, tuple[float, float]], dict[str, tuple[float, float]]]]]:
+def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], dict[str, tuple[float, float]]]]:
     data_path = r"GIS\shapes"
 
     zone_files: dict[str, str] = {}
@@ -160,7 +160,7 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
         journeys: dict[tuple[str, str], tuple] = {} # value is data from wu03ew
         distances: dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]] = {} # value is easting and northing for residence and workplace, as well as distance (m)
 
-        locations: dict[str, dict[str, tuple[float, float]]] = {"origin": {}, "destination": {}}
+        locations: dict[str, tuple[float, float]] = {}
 
         for row in zone.itertuples(index=False):
             # Location of residence, location of workplace, number of people by method of travel
@@ -199,8 +199,8 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
                 src = convert.convert_easting_northing_to_latlon(x1, y1)
                 dest = convert.convert_easting_northing_to_latlon(x2, y2)
                 distances[(str(residence_pwc.iloc[0].MSOA11CD), str(pwc.MSOA11CD))] = (src, dest, dist)
-                locations["origin"][str(residence_pwc.iloc[0].MSOA11CD)] = src
-                locations["destination"][str(pwc.MSOA11CD)] = dest
+                locations[str(residence_pwc.iloc[0].MSOA11CD)] = src
+                locations[str(pwc.MSOA11CD)] = dest
 
         zone_data[name] = (journeys, distances, locations)
 
