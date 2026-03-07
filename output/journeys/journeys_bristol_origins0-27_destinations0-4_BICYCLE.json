@@ -4,46 +4,6 @@
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.50984356085078,
-                        "longitude": -2.6206478045664245
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.503999164582886,
-                        "longitude": -2.599264114553044
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.50020577393079,
-                        "longitude": -2.6602330112794887
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49406556519643,
-                        "longitude": -2.5903931566246947
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
                         "latitude": 51.49564318339498,
                         "longitude": -2.5740561956225885
                     }
@@ -56,16 +16,6 @@
                     "latLng": {
                         "latitude": 51.49243807827309,
                         "longitude": -2.6131090884235775
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49125325483769,
-                        "longitude": -2.6481070261795567
                     }
                 }
             }
@@ -114,36 +64,6 @@
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.48614276450099,
-                        "longitude": -2.5423042982504085
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.483535030827824,
-                        "longitude": -2.5247285131695993
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.48326549127021,
-                        "longitude": -2.567715566848753
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
                         "latitude": 51.47975947285581,
                         "longitude": -2.632850699303142
                     }
@@ -174,16 +94,6 @@
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.475628550332864,
-                        "longitude": -2.5174299749383406
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
                         "latitude": 51.473889633064516,
                         "longitude": -2.546013837490594
                     }
@@ -196,16 +106,6 @@
                     "latLng": {
                         "latitude": 51.47201984026214,
                         "longitude": -2.591543938571306
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.47120592000811,
-                        "longitude": -2.527917471701527
                     }
                 }
             }
@@ -249,195 +149,13 @@
                     }
                 }
             }
-        }
-    ],
-    "destinations": [
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.50984356085078,
-                        "longitude": -2.6206478045664245
-                    }
-                }
-            }
         },
         {
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.503999164582886,
-                        "longitude": -2.599264114553044
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.50020577393079,
-                        "longitude": -2.6602330112794887
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49406556519643,
-                        "longitude": -2.5903931566246947
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49243807827309,
-                        "longitude": -2.6131090884235775
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49032253301402,
-                        "longitude": -2.681360814761932
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.489414953925184,
-                        "longitude": -2.6247244562322516
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.45414945341986,
-                        "longitude": -2.600854414670557
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.55331720493918,
-                        "longitude": -2.623852866506432
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.53352132152532,
-                        "longitude": -2.5793775369551812
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.50768893834969,
-                        "longitude": -2.5395039539489015
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.50727590176161,
-                        "longitude": -2.5697257377325724
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.455221264382416,
-                        "longitude": -2.581867184843602
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.5351827753445,
-                        "longitude": -2.543831975478232
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.47975947285581,
-                        "longitude": -2.632850699303142
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.47789079164852,
-                        "longitude": -2.686493542989423
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.483535030827824,
-                        "longitude": -2.5247285131695993
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.48326549127021,
-                        "longitude": -2.567715566848753
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.46288846580535,
-                        "longitude": -2.613780299437373
+                        "latitude": 51.4591637211779,
+                        "longitude": -2.5546382463915944
                     }
                 }
             }
@@ -456,8 +174,150 @@
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.47201984026214,
-                        "longitude": -2.591543938571306
+                        "latitude": 51.45414945341986,
+                        "longitude": -2.600854414670557
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.45176286144149,
+                        "longitude": -2.615217356682728
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.44654987619791,
+                        "longitude": -2.5493349885832157
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.44294440944735,
+                        "longitude": -2.609616346325574
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.44092280214005,
+                        "longitude": -2.578570878252896
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.43733673948429,
+                        "longitude": -2.6028092611103135
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.436772822767715,
+                        "longitude": -2.5924874547946133
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.43644185923799,
+                        "longitude": -2.61351692069052
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.43439993035442,
+                        "longitude": -2.5680913229238724
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.46356893342478,
+                        "longitude": -2.566513458850837
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.46826069333111,
+                        "longitude": -2.56034850789009
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.45414945341986,
+                        "longitude": -2.600854414670557
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.49032253301402,
+                        "longitude": -2.681360814761932
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.50768893834969,
+                        "longitude": -2.5395039539489015
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.455221264382416,
+                        "longitude": -2.581867184843602
                     }
                 }
             }
@@ -471,37 +331,7 @@
                     }
                 }
             }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.47120592000811,
-                        "longitude": -2.527917471701527
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.49023407887405,
-                        "longitude": -2.455583079166786
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
-                        "latitude": 51.45718645626215,
-                        "longitude": -2.567377469807995
-                    }
-                }
-            }
         }
     ],
-    "travelMode": "DRIVE"
+    "travelMode": "BICYCLE"
 }

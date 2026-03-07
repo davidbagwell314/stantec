@@ -1,0 +1,37 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.22519205633678,
+                        "longitude": -2.9803573936210506
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.23893927377305,
+                        "longitude": -2.9929230135840514
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.22519205633678,
+                        "longitude": -2.9803573936210506
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "BICYCLE"
+}
