@@ -27,10 +27,10 @@ Download `dft_traffic_counts_raw_counts.csv` from https://roadtraffic.dft.gov.uk
 
 ## Google Maps API
 
-`output/journeys/` contains JSON data for requests for Compute Route Matrix. Filenames specify the zone of residence, the group of origins and destinations used, and the method of transport used. \
+`output/journeys/` contains JSON data for requests for Compute Route Matrix. Filenames specify the zone of residence, the group of origins and destinations used, and the method of transport used.
 
-`output/responses/` contains JSON data for responses from Compute Route Matrix. Filenames specify the zone of residence, the group of origins and destinations used, and the method of transport used. \
+`output/responses/` contains JSON data for responses from Compute Route Matrix. Filenames specify the zone of residence, the group of origins and destinations used, and the method of transport used.
 
-`output/api_journeys_idx.csv` contains the MSOA codes and their index used by Compute Route Matrix, for both locations of residence and workplace. When getting the response from Compute Route Matrix, use this to map the `originIndex` and `destinationIndex` to their respective MSOA codes. Columns are: `zone`, `mode`, `residence`, `workplace`, `originIndex`, `destinationIndex`. \
+`output/api_journeys_idx.csv` contains the MSOA codes and their index used by Compute Route Matrix, for both locations of residence and workplace. When getting the response from Compute Route Matrix, use this to map the `originIndex` and `destinationIndex` to their respective MSOA codes. Columns are: `zone`, `mode`, `residence`, `workplace`, `originIndex`, `destinationIndex`.
 
 `output/api_journeys.csv` contains journey times and distances for different modes of transport, and the number of people for each journey, based on the outputs from `output/responses/` and the `wu03ew` table. Columns are: `zone_residence`, `zone_workplace`, `mode`, `residence`, `workplace`, `number`, `distance`, `time`
