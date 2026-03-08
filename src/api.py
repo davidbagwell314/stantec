@@ -72,7 +72,7 @@ if __name__ == "__main__":
                 origins_idx[name][mode][int(str(row.originIndex))] = str(row.residence)
                 destinations_idx[name][mode][int(str(row.destinationIndex))] = str(row.workplace)
 
-    compute_route_matrix_response_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
+    journey_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
 
     responses_location: str = "output/responses/"
     for root, dirs, files in os.walk(responses_location):
@@ -105,9 +105,9 @@ if __name__ == "__main__":
                 for column in modes[mode]:
                     number = wu03ew[journey][column]
                     if number > 0:
-                        compute_route_matrix_response_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], number, element['distanceMeters'], int(element['duration'][:-1])])
+                        journey_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], number, element['distanceMeters'], int(element['duration'][:-1])])
 
     # Save the data
     with open('output/api_journeys.csv', 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerows(compute_route_matrix_response_data)
+        writer.writerows(journey_data)
