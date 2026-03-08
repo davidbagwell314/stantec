@@ -35,32 +35,6 @@ def save_to_json(data, filename):
     except TypeError as e:
         print(f"Data is not JSON serializable: {e}")
 
-# reads data from json file
-def read_json_file(file_path):
-    """
-    Reads and parses a JSON file.
-    
-    :param file_path: Path to the JSON file
-    :return: Parsed Python object (dict/list) or None if error occurs
-    """
-    # Check if file exists
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' not found.")
-        return None
-
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)  # Parse JSON into Python object
-            return data
-    except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON format. {e}")
-    except PermissionError:
-        print(f"Error: Permission denied when reading '{file_path}'.")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-    
-    return None
-
 # retrieve both API and non-API journeys as well as other metadata, and save API journeys in correct format
 def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, tuple[list[int], float]], save_location: str) -> tuple[dict[str, dict[str, dict[str, dict[str, tuple[float, float]]]]], dict[str, dict[str, dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]]]], dict[str, list[str]],  dict[tuple[float, float], str], dict[int, dict[tuple[str, str], int]]]:
     data = zones.get_zone_data(min_num_journeys)
@@ -199,10 +173,24 @@ if __name__ == "__main__":
     # Google Maps API modes of transport and their columns in the wu03ew table
     modes: dict[str, tuple[list[int], float]] = {"DRIVE": ([5, 7, 8], 25.0), "BICYCLE": ([9], 6.0), "WALK": ([10], 1.4), "TWO_WHEELER": ([6], 17.0), "BUS": ([4], 5.5), "TRAIN": ([3], 30.0)}
 
-    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 5000, modes, "output/journeys/")
+    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 50, modes, "output/journeys/")
 
-    csv_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
+    api_journeys_idx_data: list[list] = [['zone', 'mode', 'residence', 'workplace', 'originIndex', 'destinationIndex']]
+    non_api_journeys_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
 
+    # Store the indices for origins and destinations for journeys using Google Maps API
+    for name, zone_data in api_journeys.items():
+        for mode, data in zone_data.items():
+            for i, origin in enumerate(data["origin"].keys()):
+                for j, destination in enumerate(data["destination"].keys()):
+                    api_journeys_idx_data.append([name, mode, origin, destination, i, j])
+
+    # Save the data
+    with open('output/api_journeys_idx.csv', 'w', newline='') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerows(api_journeys_idx_data)
+
+    # Estimate distance and journey time for journeys not using Google Maps API
     non_api_dist_time: dict[str, dict[str, dict[tuple[str, str], tuple[float, float]]]] = {}
     for name, zone_data in non_api_journeys.items():
         non_api_dist_time[name] = {}
@@ -220,8 +208,9 @@ if __name__ == "__main__":
                 
                 for column in modes[mode][0]:
                     if wu03ew[column][journey] > 0:
-                        csv_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], wu03ew[column][journey], journey_dist, journey_time])
+                        non_api_journeys_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], wu03ew[column][journey], journey_dist, journey_time])
 
+    # Save the data
     with open('output/non_api_journeys.csv', 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerows(csv_data)
+        writer.writerows(non_api_journeys_data)

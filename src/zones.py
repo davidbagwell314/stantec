@@ -124,7 +124,7 @@ def fetch_MSOA_PWC(codes):
         """
     ).fetchdf()
 
-def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], dict[str, tuple[float, float]], list[str]]]:
+def get_zones() -> dict[str, pd.DataFrame]:
     data_path = r"GIS\shapes"
 
     zone_files: dict[str, str] = {}
@@ -147,6 +147,11 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
         else:
             zones.update({name: df})
 
+    return zones
+
+def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], dict[str, tuple[float, float]], list[str]]]:
+    zones = get_zones()
+    
     # Info about zone_data dictionary:
     # Key: name of zone (e.g. 'bridgwater')
     # Value: tuple of journeys, distances, and locations

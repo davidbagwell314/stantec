@@ -1,1 +1,10 @@
 zone_residence,zone_workplace,mode,residence,workplace,number,distance,time
+bristol,other,driving,E02003038,E02003117,49,822,160
+bristol,other,passenger,E02003038,E02003117,3,822,160
+bristol,other,driving,E02003039,E02003117,39,2919,361
+bristol,other,passenger,E02003039,E02003117,5,2919,361
+bristol,other,taxi,E02003039,E02003121,1,5598,402
+bristol,other,driving,E02003039,E02003121,28,5598,402
+bristol,other,passenger,E02003039,E02003121,3,5598,402
+bristol,other,driving,E02003038,E02003121,36,7259,712
+bristol,other,passenger,E02003038,E02003121,7,7259,712
