@@ -1,1 +1,1 @@
-zone,mode,residence,workplace,distance,time
+zone_residence,zone_workplace,mode,residence,workplace,number,distance,time

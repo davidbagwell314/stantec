@@ -62,8 +62,9 @@ def read_json_file(file_path):
     return None
 
 # retrieve both API and non-API journeys as well as other metadata, and save API journeys in correct format
-def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, tuple[list[int], float]], save_location: str) -> tuple[dict[str, dict[str, dict[str, dict[str, tuple[float, float]]]]], dict[str, dict[str, dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]]]], dict[str, list[str]],  dict[tuple[float, float], str]]:
+def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, tuple[list[int], float]], save_location: str) -> tuple[dict[str, dict[str, dict[str, dict[str, tuple[float, float]]]]], dict[str, dict[str, dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]]]], dict[str, list[str]],  dict[tuple[float, float], str], dict[int, dict[tuple[str, str], int]]]:
     data = zones.get_zone_data(min_num_journeys)
+    wu03ew: dict[int, dict[tuple[str, str], int]] = {}
 
     zone_codes: dict[str, list[str]] = {}
     location_to_code: dict[tuple[float, float], str] = {}
@@ -88,9 +89,17 @@ def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, 
                     valid_api_journey = False
                     valid_journey = False
                     for i in idx[0]: # check for each column in wu03ew
-                        if people[i] >= api_num_journeys:
+                        num = people[i]
+
+                        # update numbers with wu03ew data
+                        if not i in wu03ew:
+                            wu03ew[i] = {}
+                        if not journey in wu03ew[i]:
+                            wu03ew[i][journey] = 0
+                        wu03ew[i][journey] += num
+
+                        if num >= api_num_journeys:
                             valid_api_journey = True
-                            break
 
                     if not valid_api_journey:
                         for i in idx[0]:
@@ -103,7 +112,6 @@ def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, 
                         api_journeys[name][mode]["origin"][journey[0]] = zone_data[2][journey[0]]
                         api_journeys[name][mode]["destination"][journey[1]] = zone_data[2][journey[1]]
                     elif valid_journey:
-                        print(f"{journey}: {zone_data[1][journey]}")
                         non_api_journeys[name][mode][journey] = zone_data[1][journey]
                     
                     location_to_code[zone_data[2][journey[0]]] = journey[0]
@@ -181,15 +189,19 @@ def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, 
                         filepath = os.path.join(save_location, f"journeys_{name}_origins{origins_start}-{origins_end}_destinations{destinations_start}-{destinations_end}_{mode}.json")
                         save_to_json(journey_data, filepath)
 
-    return api_journeys, non_api_journeys, zone_codes, location_to_code
+    return api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew
 
 if __name__ == "__main__":
-    # Modes of transport and their columns in the wu03ew table
+    # wu03ew modes of transport
+    # wu03ew columns: residence, workplace, all, home, metro, train, bus, taxi, motorcycle, driving, passenger, bicycle, foot, other
+    wu03ew_modes = ["all", "home", "metro", "train", "bus", "taxi", "motorcycle", "driving", "passenger", "bicycle", "foot", "other"]
+
+    # Google Maps API modes of transport and their columns in the wu03ew table
     modes: dict[str, tuple[list[int], float]] = {"DRIVE": ([5, 7, 8], 25.0), "BICYCLE": ([9], 6.0), "WALK": ([10], 1.4), "TWO_WHEELER": ([6], 17.0), "BUS": ([4], 5.5), "TRAIN": ([3], 30.0)}
 
-    api_journeys, non_api_journeys, zone_codes, location_to_code = get_journeys(5, 50, modes, "output/journeys/")
+    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 5000, modes, "output/journeys/")
 
-    csv_data: list[list] = [['zone', 'mode', 'residence', 'workplace', 'distance', 'time']]
+    csv_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
 
     non_api_dist_time: dict[str, dict[str, dict[tuple[str, str], tuple[float, float]]]] = {}
     for name, zone_data in non_api_journeys.items():
@@ -200,7 +212,15 @@ if __name__ == "__main__":
                 journey_dist = distance[2] * 1.2
                 journey_time = journey_dist / modes[mode][1]
                 non_api_dist_time[name][mode][journey] = (journey_dist, journey_time)
-                csv_data.append([name, mode, journey[0], journey[1], journey_dist, journey_time])
+                workplace = "other"
+                for workplace_name, codes in zone_codes.items():
+                    if journey[1] in codes:
+                        workplace = workplace_name
+                        break
+                
+                for column in modes[mode][0]:
+                    if wu03ew[column][journey] > 0:
+                        csv_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], wu03ew[column][journey], journey_dist, journey_time])
 
     with open('output/non_api_journeys.csv', 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
