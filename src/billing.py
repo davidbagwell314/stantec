@@ -1,3 +1,6 @@
+# Ignore
+# Script to check billing cost of Google Maps API
+
 import json
 import os
 

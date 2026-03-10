@@ -1,3 +1,5 @@
+# Script to convert eastings and northings to latitude and longitude
+
 from pyproj import Transformer
 import csv
 

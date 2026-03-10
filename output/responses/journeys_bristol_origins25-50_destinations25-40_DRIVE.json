@@ -2,33 +2,25 @@
     {
         "originIndex": 0,
         "destinationIndex": 0,
-        "status": {},
         "distanceMeters": 822,
-        "duration": "160s",
-        "condition": "ROUTE_EXISTS"
+        "duration": "160s"
     },
     {
         "originIndex": 1,
         "destinationIndex": 0,
-        "status": {},
         "distanceMeters": 2919,
-        "duration": "361s",
-        "condition": "ROUTE_EXISTS"
+        "duration": "361s"
     },
     {
         "originIndex": 1,
         "destinationIndex": 1,
-        "status": {},
         "distanceMeters": 5598,
-        "duration": "402s",
-        "condition": "ROUTE_EXISTS"
+        "duration": "402s"
     },
     {
         "originIndex": 0,
         "destinationIndex": 1,
-        "status": {},
         "distanceMeters": 7259,
-        "duration": "712s",
-        "condition": "ROUTE_EXISTS"
+        "duration": "712s"
     }
 ]

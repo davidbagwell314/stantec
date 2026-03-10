@@ -1,3 +1,8 @@
+# Script to get data for each zone and MSOA
+# Each zone has a name and a list of MSOAs
+# `fetch_MSOA_PWC` fetches the population-weighted centroid of each MSOA
+# `fetch_wu03ew` the number of journeys from each MSOA by workplace and mode of transport
+
 import shapefile
 import pandas as pd
 import duckdb
@@ -6,6 +11,7 @@ import os
 import sys
 import convert
 
+# Initialise global variables
 connected_wu03ew = False
 con_wu03ew: duckdb.DuckDBPyConnection
 header_wu03ew: list[str]
@@ -16,10 +22,13 @@ reader_MSOA = 0
 header_MSOA: list[str]
 schema_MSOA: dict[str, str]
 
+# Print error message and terminate
 def error(msg: str = "") -> None:
     print(msg)
     exit()
 
+# Get shapefile data for a GIS shapefile
+# Used for retrieving zones
 def get_shapefile_records(shapefile_path: (str | os.PathLike[str])) -> (pd.DataFrame | None):
     try:
         # Check shapefile exists
@@ -47,7 +56,8 @@ def get_shapefile_records(shapefile_path: (str | os.PathLike[str])) -> (pd.DataF
 
     return None
 
-def view_shapefile_fields(shapefile_path):
+# View shapefile data for a GIS shapefile
+def view_shapefile_fields(shapefile_path: (str | os.PathLike[str])) -> None:
     try:
         # Check shapefile exists
         if not os.path.exists(shapefile_path):
@@ -75,10 +85,13 @@ def view_shapefile_fields(shapefile_path):
     except Exception as e:
         print(f"Unexpected error: {e}")
 
-def fetch_wu03ew(residence):
+# Get row from wu03ew table by residence
+# Gets number of journeys between two MSOAs by various modes of transport
+def fetch_wu03ew(residence: str) -> pd.DataFrame:
     global connected_wu03ew, con_wu03ew, header_wu03ew, schema_wu03ew
     csv_src = 'data/wu03ew_v2.csv'
 
+    # Don't need to reinitialise every time
     if not connected_wu03ew:
         connected_wu03ew = True
         con_wu03ew = duckdb.connect()
@@ -97,10 +110,13 @@ def fetch_wu03ew(residence):
         """
     ).fetchdf()
 
-def fetch_MSOA_PWC(codes):
+# Get population-weighted centroid for a list of MSOAs
+# This is the location to calculate distances and journey times from
+def fetch_MSOA_PWC(codes: list[str]) -> pd.DataFrame:
     global connected_MSOA, con_MSOA, reader_MSOA, header_MSOA, schema_MSOA
     csv_src = 'data/MSOA_Dec_2011_PWC_in_England_and_Wales_2022_-7657754233007660732.csv'
 
+    # Don't need to reinitialise every time
     if not connected_MSOA:
         connected_MSOA = True
         con_MSOA = duckdb.connect()
@@ -124,6 +140,7 @@ def fetch_MSOA_PWC(codes):
         """
     ).fetchdf()
 
+# Get the zones: their names and MSOA codes
 def get_zones() -> dict[str, pd.DataFrame]:
     data_path = r"GIS\shapes"
 
@@ -149,9 +166,10 @@ def get_zones() -> dict[str, pd.DataFrame]:
 
     return zones
 
+# Get data about each zone
 def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tuple[int, int, int, int, int, int, int, int, int, int, int, int]], dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]], dict[str, tuple[float, float]], list[str]]]:
     zones = get_zones()
-    
+
     # Info about zone_data dictionary:
     # Key: name of zone (e.g. 'bridgwater')
     # Value: tuple of journeys, distances, and locations
@@ -174,19 +192,21 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
 
     zone_data = {}
 
+    # Iterate through each zone
     for name, zone in zones.items():
         # key for both is the residence MSOA and the workplace MSOA
         journeys: dict[tuple[str, str], tuple] = {} # value is data from wu03ew
         distances: dict[tuple[str, str], tuple[tuple[float, float], tuple[float, float], float]] = {} # value is easting and northing for residence and workplace, as well as distance (m)
 
-        locations: dict[str, tuple[float, float]] = {} # stores location of all MSOAs in distances
-        codes: list[str] = [] # stores all MSOA codes for each zone
+        locations: dict[str, tuple[float, float]] = {} # stores location of all MSOAs in `distances`
+        codes: list[str] = [] # stores all MSOA codes for this zone
 
+        # Iterate through all MSOAs in the zone
         for row in zone.itertuples(index=False):
             codes.append(str(row.MSOA11CD))
 
             # Location of residence, location of workplace, number of people by method of travel
-            wu03ew_table = fetch_wu03ew(row.MSOA11CD)
+            wu03ew_table = fetch_wu03ew(str(row.MSOA11CD))
 
             # List of all workplace locations for this location of residence
             workplace_list = []
@@ -195,12 +215,13 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
             # wu03ew columns: residence, workplace, all, home, metro, train, bus, taxi, motorcycle, driving, passenger, bicycle, foot, other
             for wu03ew_row in wu03ew_table.itertuples(index=False):
                 data = tuple([int(str(x)) for i, x in enumerate(wu03ew_row) if i > 1])
+                # Only add the data if there are enough people doing the journey
                 if data[0] > num_journeys:
                     journeys[(str(wu03ew_row.residence), str(wu03ew_row.workplace))] = data
                     workplace_list.append(str(wu03ew_row.workplace))
 
             # Population-weighted centroid for location of residence
-            residence_pwc = fetch_MSOA_PWC([row.MSOA11CD])
+            residence_pwc = fetch_MSOA_PWC([str(row.MSOA11CD)])
 
             # Population-weighted centroid for location of workplace
             workplace_pwc = fetch_MSOA_PWC(workplace_list)
@@ -209,8 +230,11 @@ def get_zone_data(num_journeys: int) -> dict[str, tuple[dict[tuple[str, str], tu
             x1, y1 = float(residence_pwc.iloc[0].x), float(residence_pwc.iloc[0].y)
             for pwc in workplace_pwc.iloc:
                 x2, y2 = float(pwc.x), float(pwc.y)
+
+                # Straight-line distance
                 dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 
+                # Get latitude and longitude
                 src = convert.convert_easting_northing_to_latlon(x1, y1)
                 dest = convert.convert_easting_northing_to_latlon(x2, y2)
                 
