@@ -1,3 +1,6 @@
+# Script to process Google Maps API responses
+# Writes data to `output\api_journeys.csv` so we can use it in `results.py`
+
 import json
 import os
 import pandas as pd
@@ -138,7 +141,7 @@ if __name__ == "__main__":
                 # Iterate through each wu03ew mode of transport for the Google Maps API mode of transport
                 for column in modes[mode]:
                     number = wu03ew[journey][column]
-                    
+
                     # Check if there are any journeys
                     if number > 0:
                         journey_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], number, element['distanceMeters'], int(element['duration'][:-1])])
