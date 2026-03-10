@@ -3,3 +3,4 @@ data/*
 !data/SAM_MSOA_DEC_2011_EW.csv
 __pycache__
 .Rproj.user
+src/secret.py
