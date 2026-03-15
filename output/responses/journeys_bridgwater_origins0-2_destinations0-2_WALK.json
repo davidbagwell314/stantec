@@ -5,26 +5,20 @@
         "duration": "0s"
     },
     {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "duration": "0s"
+    },
+    {
         "originIndex": 1,
         "destinationIndex": 1,
         "duration": "0s"
     },
     {
         "originIndex": 0,
-        "destinationIndex": 0,
-        "duration": "0s"
-    },
-    {
-        "originIndex": 2,
-        "destinationIndex": 0,
-        "distanceMeters": 3194,
-        "duration": "2623s"
-    },
-    {
-        "originIndex": 0,
-        "destinationIndex": 2,
-        "distanceMeters": 3194,
-        "duration": "2668s"
+        "destinationIndex": 1,
+        "distanceMeters": 2076,
+        "duration": "1736s"
     },
     {
         "originIndex": 1,
@@ -33,21 +27,27 @@
         "duration": "1724s"
     },
     {
-        "originIndex": 2,
-        "destinationIndex": 1,
-        "distanceMeters": 2206,
-        "duration": "1812s"
-    },
-    {
         "originIndex": 1,
         "destinationIndex": 2,
         "distanceMeters": 2206,
         "duration": "1847s"
     },
     {
-        "originIndex": 0,
+        "originIndex": 2,
         "destinationIndex": 1,
-        "distanceMeters": 2076,
-        "duration": "1736s"
+        "distanceMeters": 2206,
+        "duration": "1812s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 3194,
+        "duration": "2668s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 0,
+        "distanceMeters": 3194,
+        "duration": "2623s"
     }
 ]

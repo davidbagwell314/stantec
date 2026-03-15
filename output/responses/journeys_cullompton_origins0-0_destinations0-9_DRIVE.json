@@ -1,6 +1,24 @@
 [
     {
         "originIndex": 0,
+        "destinationIndex": 9,
+        "distanceMeters": 5077,
+        "duration": "491s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 6,
+        "distanceMeters": 10319,
+        "duration": "901s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 12376,
+        "duration": "816s"
+    },
+    {
+        "originIndex": 0,
         "destinationIndex": 8,
         "duration": "0s"
     },
@@ -12,21 +30,15 @@
     },
     {
         "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 20699,
+        "duration": "1263s"
+    },
+    {
+        "originIndex": 0,
         "destinationIndex": 4,
         "distanceMeters": 30264,
         "duration": "1471s"
-    },
-    {
-        "originIndex": 0,
-        "destinationIndex": 9,
-        "distanceMeters": 5077,
-        "duration": "491s"
-    },
-    {
-        "originIndex": 0,
-        "destinationIndex": 0,
-        "distanceMeters": 12376,
-        "duration": "816s"
     },
     {
         "originIndex": 0,
@@ -36,21 +48,9 @@
     },
     {
         "originIndex": 0,
-        "destinationIndex": 6,
-        "distanceMeters": 10319,
-        "duration": "901s"
-    },
-    {
-        "originIndex": 0,
         "destinationIndex": 3,
         "distanceMeters": 21388,
         "duration": "1367s"
-    },
-    {
-        "originIndex": 0,
-        "destinationIndex": 2,
-        "distanceMeters": 20699,
-        "duration": "1263s"
     },
     {
         "originIndex": 0,

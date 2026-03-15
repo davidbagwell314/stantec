@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import time
 from secret import ROUTES_API_KEY as key
 
 journeysPath = "output/journeys/"
@@ -22,3 +23,5 @@ for i in range(len(fileList)):
 
     with open(responsesPath + fileList[i], "w") as writeFileObject:
         json.dump(data, writeFileObject, indent=4)
+    
+    time.sleep(10)

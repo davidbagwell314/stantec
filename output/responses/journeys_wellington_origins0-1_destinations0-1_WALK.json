@@ -1,9 +1,24 @@
 [
     {
-        "error": {
-            "code": 429,
-            "message": "Resource has been exhausted (e.g. check quota).",
-            "status": "RESOURCE_EXHAUSTED"
-        }
+        "originIndex": 1,
+        "destinationIndex": 1,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0,
+        "distanceMeters": 975,
+        "duration": "780s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 975,
+        "duration": "859s"
     }
 ]
