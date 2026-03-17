@@ -1,0 +1,112 @@
+{
+    "origins": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.855901738695714,
+                        "longitude": -3.3948108415986558
+                    }
+                }
+            }
+        }
+    ],
+    "destinations": [
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.73066111926279,
+                        "longitude": -3.523655586249247
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.72434823113571,
+                        "longitude": -3.532524126884802
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.718131053415405,
+                        "longitude": -3.520025040479455
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.71582746927534,
+                        "longitude": -3.4840538063438617
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.71389774121554,
+                        "longitude": -3.5021153377492587
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.70341593780477,
+                        "longitude": -3.5348182733499156
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.90656966627668,
+                        "longitude": -3.473745303346594
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.893260978856766,
+                        "longitude": -3.374135957568766
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 50.855901738695714,
+                        "longitude": -3.3948108415986558
+                    }
+                }
+            }
+        }
+    ],
+    "travelMode": "TRANSIT",
+    "transitPreferences": {
+        "allowedTravelModes": [
+            "BUS"
+        ]
+    }
+}

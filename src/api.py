@@ -101,6 +101,8 @@ if __name__ == "__main__":
 
     responses_location: str = "output/responses/"
 
+    print(journeys_idx, destinations_idx)
+
     # Read through each response
     for root, dirs, files in os.walk(responses_location):
         for file_name in files:
@@ -123,29 +125,32 @@ if __name__ == "__main__":
             data: list[dict] = read_json_file(file_path)
             
             for element in data:
-                # Origin and destination indices
-                origin: int = element['originIndex'] + origins[0]
-                dest: int = element['destinationIndex'] + destinations[0]
+                try:
+                    # Origin and destination indices
+                    origin: int = element['originIndex'] + origins[0]
+                    dest: int = element['destinationIndex'] + destinations[0]
 
-                # Get the origins and destination MSOA codes using their indices
-                journey: tuple[str, str] = (origins_idx[name][mode][origin], destinations_idx[name][mode][dest])
+                    # Get the origins and destination MSOA codes using their indices
+                    journey: tuple[str, str] = (origins_idx[name][mode][origin], destinations_idx[name][mode][dest])
+                    
+                    # Find the workplace zone
+                    # "other" is a fallback in case the workplace is not in one of our zones
+                    workplace = "other"
+                    for workplace_name, codes in zone_codes.items():
+                        if journey[1] in codes:
+                            workplace = workplace_name
+                            break
+
+                    # Iterate through each wu03ew mode of transport for the Google Maps API mode of transport
+                    for column in modes[mode]:
+                        if journey in wu03ew:
+                            number = wu03ew[journey][column]
+
+                            # Check if there are any journeys
+                            if number > 0 and name != workplace:
+                                journey_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], number, element['distanceMeters'], int(element['duration'][:-1])])
+                except: ...
                 
-                # Find the workplace zone
-                # "other" is a fallback in case the workplace is not in one of our zones
-                workplace = "other"
-                for workplace_name, codes in zone_codes.items():
-                    if journey[1] in codes:
-                        workplace = workplace_name
-                        break
-
-                # Iterate through each wu03ew mode of transport for the Google Maps API mode of transport
-                for column in modes[mode]:
-                    number = wu03ew[journey][column]
-
-                    # Check if there are any journeys
-                    if number > 0:
-                        journey_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], number, element['distanceMeters'], int(element['duration'][:-1])])
-
     # Save the data
     with open('output/api_journeys.csv', 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
