@@ -1,0 +1,48 @@
+[
+    {
+        "originIndex": 0,
+        "destinationIndex": 7
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 20155,
+        "duration": "2800s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 6,
+        "distanceMeters": 5888,
+        "duration": "1206s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5,
+        "distanceMeters": 50364,
+        "duration": "5324s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3,
+        "distanceMeters": 21437,
+        "duration": "2975s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 21403,
+        "duration": "3424s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 24608,
+        "duration": "4535s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 23251,
+        "duration": "3145s"
+    }
+]

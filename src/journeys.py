@@ -78,7 +78,7 @@ def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, 
                             wu03ew[i][journey] = 0
                         wu03ew[i][journey] += num
 
-                        if num < api_num_journeys and num >= min_num_journeys:
+                        if num >= api_num_journeys and num >= min_num_journeys:
                             valid_api_journey = True
 
                     # Not enough journeys to use Google Maps API
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     # Speeds are estimated from Google Maps API responses - update these numbers for more accurate results
     modes: dict[str, tuple[list[int], float]] = {"DRIVE": ([5, 7, 8], 25.0), "BICYCLE": ([9], 6.0), "WALK": ([10], 1.4), "TWO_WHEELER": ([6], 17.0), "BUS": ([4], 5.5), "TRAIN": ([3], 30.0)}
 
-    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 50, modes, "output/journeys/")
+    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 5, modes, "output/journeys/")
 
     # columns to be used
     api_journeys_idx_data: list[list] = [['zone', 'mode', 'residence', 'workplace', 'originIndex', 'destinationIndex']]

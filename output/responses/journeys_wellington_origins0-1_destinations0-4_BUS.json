@@ -1,0 +1,58 @@
+[
+    {
+        "originIndex": 1,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 1,
+        "distanceMeters": 12879,
+        "duration": "2086s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 975,
+        "duration": "859s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 12493,
+        "duration": "2030s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 13366,
+        "duration": "2500s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 2,
+        "distanceMeters": 11128,
+        "duration": "2345s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 3,
+        "distanceMeters": 975,
+        "duration": "780s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 10742,
+        "duration": "2289s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0,
+        "distanceMeters": 13752,
+        "duration": "2556s"
+    }
+]

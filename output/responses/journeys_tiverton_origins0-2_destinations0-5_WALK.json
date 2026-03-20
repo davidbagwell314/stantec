@@ -1,0 +1,109 @@
+[
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3,
+        "distanceMeters": 9896,
+        "duration": "8331s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 1,
+        "distanceMeters": 1103,
+        "duration": "909s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 4,
+        "distanceMeters": 19757,
+        "duration": "16421s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 3,
+        "distanceMeters": 9075,
+        "duration": "7669s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 3,
+        "distanceMeters": 9716,
+        "duration": "8251s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 2,
+        "distanceMeters": 9362,
+        "duration": "7692s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 8981,
+        "duration": "7328s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 9209,
+        "duration": "7850s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 1,
+        "distanceMeters": 2031,
+        "duration": "1706s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 0,
+        "distanceMeters": 10003,
+        "duration": "8499s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 21573,
+        "duration": "17868s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0,
+        "distanceMeters": 10194,
+        "duration": "8658s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 2,
+        "distanceMeters": 8079,
+        "duration": "6617s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 4,
+        "distanceMeters": 20950,
+        "duration": "17358s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 5,
+        "distanceMeters": 23825,
+        "duration": "19559s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5,
+        "distanceMeters": 25641,
+        "duration": "21006s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 5,
+        "distanceMeters": 25018,
+        "duration": "20496s"
+    }
+]

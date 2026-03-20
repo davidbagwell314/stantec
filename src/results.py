@@ -13,13 +13,13 @@ REMOVE_OUTLIERS = False
 if __name__ == "__main__":
     # Get distances and journey times for different journeys and modes of transport
     api_journeys = pd.read_csv('output/api_journeys.csv')
-    non_api_journeys = pd.read_csv('output/non_api_journeys.csv')
+    # non_api_journeys = pd.read_csv('output/non_api_journeys.csv')
     journeys = pd.concat([df for df in [api_journeys] if not df.empty], axis=0)
 
     # Criteria for the data we want to analyse
     residence_zones: list[str] = []
     workplace_zones: list[str] = []
-    modes: list[str] = ['train']
+    modes: list[str] = []
 
     # Filter journeys based on criteria
     filtered = journeys
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     
     # Calling linear regression assigning the output to the variables on the left of the equation 
     gradient, intercept,r,p,st_err = stats.linregress(non_motorway_x, non_motorway_y)
+    print(f"Non-motorway: {gradient / 1600.0 * 3600.0}mph")
     #looping over the length of x and applying y=mx+c using the m and c from the output above to find the regression line   
     non_motorway_line=[]
     for i in range (len(non_motorway_x)):
@@ -83,6 +84,7 @@ if __name__ == "__main__":
 
     # Calling linear regression assigning the output to the variables on the left of the equation 
     gradient, intercept,r,p,st_err = stats.linregress(motorway_x, motorway_y)
+    print(f"Motorway: {gradient / 1600.0 * 3600.0}mph")
     #looping over the length of x and applying y=mx+c using the m and c from the output above to find the regression line   
     motorway_line=[]
     for i in range (len(motorway_x)):
@@ -98,7 +100,6 @@ if __name__ == "__main__":
     plt.ylabel('Distance (m)')
 
     plt.show()
-    print("Gradient:", gradient)
     
     # plt.hist(distances, bins=100, weights=frequencies)
     plt.savefig("graphs/histogram.png")

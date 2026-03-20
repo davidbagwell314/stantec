@@ -1,0 +1,38 @@
+[
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 5076,
+        "duration": "4458s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3,
+        "distanceMeters": 5359,
+        "duration": "4419s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 9716,
+        "duration": "8511s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 9075,
+        "duration": "7959s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 11600,
+        "duration": "9676s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5,
+        "distanceMeters": 23189,
+        "duration": "19481s"
+    }
+]

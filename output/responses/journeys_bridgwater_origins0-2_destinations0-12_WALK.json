@@ -1,0 +1,235 @@
+[
+    {
+        "originIndex": 2,
+        "destinationIndex": 5,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3,
+        "distanceMeters": 965,
+        "duration": "781s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 5,
+        "distanceMeters": 2206,
+        "duration": "1847s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5,
+        "distanceMeters": 3194,
+        "duration": "2668s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 2,
+        "distanceMeters": 8044,
+        "duration": "6668s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 4,
+        "distanceMeters": 9868,
+        "duration": "8043s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 4,
+        "distanceMeters": 11165,
+        "duration": "9076s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 3,
+        "distanceMeters": 2601,
+        "duration": "2139s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 12,
+        "distanceMeters": 16912,
+        "duration": "13846s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 1,
+        "distanceMeters": 8479,
+        "duration": "6947s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 8,
+        "distanceMeters": 15705,
+        "duration": "12775s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 6,
+        "distanceMeters": 3695,
+        "duration": "3072s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 9,
+        "distanceMeters": 2476,
+        "duration": "2033s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 6,
+        "distanceMeters": 5362,
+        "duration": "4481s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 7574,
+        "duration": "6176s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 11946,
+        "duration": "9711s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 10,
+        "distanceMeters": 14224,
+        "duration": "11647s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 6,
+        "distanceMeters": 4883,
+        "duration": "4084s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 3,
+        "distanceMeters": 3357,
+        "duration": "2735s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 9,
+        "distanceMeters": 1516,
+        "duration": "1258s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 9,
+        "distanceMeters": 3519,
+        "duration": "2935s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 12,
+        "distanceMeters": 17390,
+        "duration": "14243s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 0,
+        "distanceMeters": 13616,
+        "duration": "11058s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 8,
+        "distanceMeters": 14317,
+        "duration": "11642s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 8628,
+        "duration": "7002s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 8805,
+        "duration": "7329s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 11,
+        "distanceMeters": 17075,
+        "duration": "13995s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 8,
+        "distanceMeters": 14035,
+        "duration": "11428s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 2,
+        "distanceMeters": 6801,
+        "duration": "5652s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 1,
+        "distanceMeters": 9867,
+        "duration": "8080s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 10,
+        "distanceMeters": 15866,
+        "duration": "13057s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 10,
+        "distanceMeters": 15388,
+        "duration": "12659s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0,
+        "distanceMeters": 12227,
+        "duration": "9925s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 11,
+        "distanceMeters": 18718,
+        "duration": "15405s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 7,
+        "distanceMeters": 29432,
+        "duration": "24083s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 11,
+        "distanceMeters": 18240,
+        "duration": "15007s"
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 12,
+        "distanceMeters": 15747,
+        "duration": "12834s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 7,
+        "distanceMeters": 28149,
+        "duration": "23046s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 7,
+        "distanceMeters": 26895,
+        "duration": "22009s"
+    }
+]

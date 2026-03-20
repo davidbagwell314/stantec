@@ -1,0 +1,146 @@
+[
+    {
+        "originIndex": 3,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 3,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 3,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 3,
+        "destinationIndex": 0
+    },
+    {
+        "originIndex": 3,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 3,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 3
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 5
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 2
+    },
+    {
+        "originIndex": 4,
+        "destinationIndex": 0
+    },
+    {
+        "originIndex": 2,
+        "destinationIndex": 0
+    },
+    {
+        "originIndex": 5,
+        "destinationIndex": 0
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0
+    }
+]

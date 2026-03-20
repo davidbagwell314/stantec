@@ -1,0 +1,73 @@
+[
+    {
+        "originIndex": 1,
+        "destinationIndex": 4,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 4,
+        "distanceMeters": 1115,
+        "duration": "287s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 0,
+        "distanceMeters": 12137,
+        "duration": "2240s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 15596,
+        "duration": "3052s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 3,
+        "distanceMeters": 10698,
+        "duration": "2148s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 11978,
+        "duration": "2227s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 5,
+        "distanceMeters": 15750,
+        "duration": "3011s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "distanceMeters": 17460,
+        "duration": "3413s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 3,
+        "distanceMeters": 14047,
+        "duration": "2705s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 1,
+        "distanceMeters": 17619,
+        "duration": "3427s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 2,
+        "distanceMeters": 15756,
+        "duration": "3066s"
+    },
+    {
+        "originIndex": 1,
+        "destinationIndex": 5,
+        "distanceMeters": 15909,
+        "duration": "3025s"
+    }
+]

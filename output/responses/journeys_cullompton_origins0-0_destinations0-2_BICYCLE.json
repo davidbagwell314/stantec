@@ -1,0 +1,19 @@
+[
+    {
+        "originIndex": 0,
+        "destinationIndex": 1,
+        "duration": "0s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 0,
+        "distanceMeters": 5359,
+        "duration": "1112s"
+    },
+    {
+        "originIndex": 0,
+        "destinationIndex": 2,
+        "distanceMeters": 5077,
+        "duration": "1476s"
+    }
+]
