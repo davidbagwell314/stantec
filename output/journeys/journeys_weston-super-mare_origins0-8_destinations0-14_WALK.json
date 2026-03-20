@@ -96,16 +96,6 @@
             "waypoint": {
                 "location": {
                     "latLng": {
-                        "latitude": 51.36816415679847,
-                        "longitude": -2.916277126741916
-                    }
-                }
-            }
-        },
-        {
-            "waypoint": {
-                "location": {
-                    "latLng": {
                         "latitude": 51.358391698219535,
                         "longitude": -2.9249581959602695
                     }
@@ -138,6 +128,16 @@
                     "latLng": {
                         "latitude": 51.358376622082396,
                         "longitude": -2.906417756601549
+                    }
+                }
+            }
+        },
+        {
+            "waypoint": {
+                "location": {
+                    "latLng": {
+                        "latitude": 51.36816415679847,
+                        "longitude": -2.916277126741916
                     }
                 }
             }
