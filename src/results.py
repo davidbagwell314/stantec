@@ -3,23 +3,25 @@
 
 import pandas as pd
 from matplotlib import pyplot as plt
+import seaborn as sns
 import numpy as np
 import math
 from scipy import stats
 
 # Whether to remove outliers (more than 2 standard deviations from mean) from analysis
-REMOVE_OUTLIERS = False
+REMOVE_OUTLIERS = True
+
+# Whether the journey is between MSOAs or entire zones
+MSOA_JOURNEY = True
 
 if __name__ == "__main__":
     # Get distances and journey times for different journeys and modes of transport
-    api_journeys = pd.read_csv('output/api_journeys.csv')
-    # non_api_journeys = pd.read_csv('output/non_api_journeys.csv')
-    journeys = pd.concat([df for df in [api_journeys] if not df.empty], axis=0)
+    journeys = pd.read_csv('output/api_journeys.csv' if MSOA_JOURNEY else 'output/zone_journeys.csv')
 
     # Criteria for the data we want to analyse
     residence_zones: list[str] = []
     workplace_zones: list[str] = []
-    modes: list[str] = []
+    modes: list[str] = ['driving']
 
     # Filter journeys based on criteria
     filtered = journeys
@@ -56,50 +58,20 @@ if __name__ == "__main__":
         dist_std = np.std(distances)
         time_std = np.std(times)
 
-    # Plot results
-    
-    split_line=[]
-    for i in range (len(times)):
-        split_line.append(7 * times[i] + 6600)
-
-    non_motorway_x = []
-    non_motorway_y = []
-    motorway_x = []
-    motorway_y = []
-    for i in range (len(times)):
-        if distances[i] < 7 * times[i] + 6600:
-            non_motorway_x.append(times[i])
-            non_motorway_y.append(distances[i])
-        else:
-            motorway_x.append(times[i])
-            motorway_y.append(distances[i])
-    
-    # Calling linear regression assigning the output to the variables on the left of the equation 
-    gradient, intercept,r,p,st_err = stats.linregress(non_motorway_x, non_motorway_y)
-    print(f"Non-motorway: {gradient / 1600.0 * 3600.0}mph")
-    #looping over the length of x and applying y=mx+c using the m and c from the output above to find the regression line   
-    non_motorway_line=[]
-    for i in range (len(non_motorway_x)):
-        non_motorway_line.append(gradient * non_motorway_x[i] + intercept)
-
-    # Calling linear regression assigning the output to the variables on the left of the equation 
-    gradient, intercept,r,p,st_err = stats.linregress(motorway_x, motorway_y)
-    print(f"Motorway: {gradient / 1600.0 * 3600.0}mph")
-    #looping over the length of x and applying y=mx+c using the m and c from the output above to find the regression line   
-    motorway_line=[]
-    for i in range (len(motorway_x)):
-        motorway_line.append(gradient * motorway_x[i] + intercept)
+    # Plot results 
+    gradient, intercept,r,p,st_err = stats.linregress(times, distances)
+    line = [(gradient * time + intercept) for time in times]
+    print(f"Mean speed: {gradient / 1600.0 * 3600.0}mph")
 
     # Plotting the data points and the best fit line and the error bars
-    plt.scatter(times, distances)
-    plt.plot(times, split_line)
-    plt.plot(non_motorway_x, non_motorway_line)
-    plt.plot(motorway_x, motorway_line)
-    plt.title('Best fit line using regression method')
-    plt.xlabel('Time (s)')
-    plt.ylabel('Distance (m)')
+    sns.scatterplot(data=filtered, x="time", y = "distance", hue="zone_workplace")
+    #plt.scatter(times, distances)
+    #plt.plot(times, line)
+    #plt.title('Journey distance vs time')
+    #plt.xlabel('Time (s)')
+    #plt.ylabel('Distance (m)')
 
     plt.show()
     
     # plt.hist(distances, bins=100, weights=frequencies)
-    plt.savefig("graphs/histogram.png")
+    #plt.savefig("graphs/histogram.png")

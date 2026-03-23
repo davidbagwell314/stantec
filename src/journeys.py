@@ -175,6 +175,47 @@ def get_journeys(min_num_journeys: int, api_num_journeys: int, modes: dict[str, 
 
     return api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew
 
+# Get journeys between each zone
+# Use as a reference for journeys between MSOAs
+def get_zone_journeys(modes: dict[str, tuple[list[int], float]], save_location: str):
+    locations: dict[str, tuple[float, float]] = {}
+    data = zones.get_zones()
+    for name, zone in data.items():
+        lat = 0.0
+        long = 0.0
+        count = 0
+        for row in zone.itertuples():
+            lat += float(str(row.LAT))
+            long += float(str(row.LONG))
+            count += 1
+        locations[name] = (lat / count, long / count)
+
+    # Save journeys in appropriate JSON format for Google Maps API
+    for mode in modes.keys():
+        mode_name = mode
+
+        if mode in ["BUS", "TRAIN"]:
+            mode_name = "TRANSIT"
+        
+        origins = []
+        destinations = []
+
+        # Store origins and destinations
+        for location, position in locations.items():
+            origins.append({"waypoint": {"location": {"latLng": {"latitude": position[0], "longitude": position[1]}}}})
+            destinations.append({"waypoint": {"location": {"latLng": {"latitude": position[0], "longitude": position[1]}}}})
+
+        journey_data = {"origins": origins, "destinations": destinations, "travelMode": mode_name}
+                        
+        # Additional data for TRANSIT modes (BUS and TRAIN)
+        if mode_name == "TRANSIT":
+            journey_data["transitPreferences"] = {"allowedTravelModes": [mode]}
+
+        # Save data for use by Google Maps API
+        filepath = os.path.join(save_location, f"journeys_{mode}.json")
+        save_to_json(journey_data, filepath)
+
+
 if __name__ == "__main__":
     # wu03ew modes of transport
     # wu03ew columns: residence, workplace, all, home, metro, train, bus, taxi, motorcycle, driving, passenger, bicycle, foot, other
@@ -185,62 +226,67 @@ if __name__ == "__main__":
     # Speeds are estimated from Google Maps API responses - update these numbers for more accurate results
     modes: dict[str, tuple[list[int], float]] = {"DRIVE": ([5, 7, 8], 25.0), "BICYCLE": ([9], 6.0), "WALK": ([10], 1.4), "TWO_WHEELER": ([6], 17.0), "BUS": ([4], 5.5), "TRAIN": ([3], 30.0)}
 
-    api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 5, modes, "output/journeys/")
+    # Whether to get zone journeys or MSOA journeys
+    if True:
+        api_journeys, non_api_journeys, zone_codes, location_to_code, wu03ew = get_journeys(5, 5, modes, "output/journeys/")
 
-    # columns to be used
-    api_journeys_idx_data: list[list] = [['zone', 'mode', 'residence', 'workplace', 'originIndex', 'destinationIndex']]
-    non_api_journeys_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
+        # columns to be used
+        api_journeys_idx_data: list[list] = [['zone', 'mode', 'residence', 'workplace', 'originIndex', 'destinationIndex']]
+        non_api_journeys_data: list[list] = [['zone_residence', 'zone_workplace', 'mode', 'residence', 'workplace', 'number', 'distance', 'time']]
 
-    # Store the indices for origins and destinations for journeys using Google Maps API
-    # These will be processed by `api.py`
-    for name, zone_data in api_journeys.items():
-        for mode, data in zone_data.items():
-            for i, origin in enumerate(data["origin"].keys()):
-                for j, destination in enumerate(data["destination"].keys()):
-                    api_journeys_idx_data.append([name, mode, origin, destination, i, j])
+        # Store the indices for origins and destinations for journeys using Google Maps API
+        # These will be processed by `request.py` and `api.py`
+        for name, zone_data in api_journeys.items():
+            for mode, data in zone_data.items():
+                for i, origin in enumerate(data["origin"].keys()):
+                    for j, destination in enumerate(data["destination"].keys()):
+                        api_journeys_idx_data.append([name, mode, origin, destination, i, j])
 
-    # Save the data
-    with open('output/api_journeys_idx.csv', 'w', newline='') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerows(api_journeys_idx_data)
+        # Save the data
+        with open('output/api_journeys_idx.csv', 'w', newline='') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerows(api_journeys_idx_data)
 
-    # Estimate distance and journey time for journeys not using Google Maps API
-    non_api_dist_time: dict[str, dict[str, dict[tuple[str, str], tuple[float, float]]]] = {}
+        # If required, estimate distance and journey time for journeys not using Google Maps API
+        if False:
+            non_api_dist_time: dict[str, dict[str, dict[tuple[str, str], tuple[float, float]]]] = {}
 
-    # Iterate through each zone
-    for name, zone_data in non_api_journeys.items():
-        non_api_dist_time[name] = {}
+            # Iterate through each zone
+            for name, zone_data in non_api_journeys.items():
+                non_api_dist_time[name] = {}
 
-        # Iterate through each mode of transport
-        for mode, data in zone_data.items():
-            non_api_dist_time[name][mode] = {}
+                # Iterate through each mode of transport
+                for mode, data in zone_data.items():
+                    non_api_dist_time[name][mode] = {}
 
-            # Iterate through each journey
-            for journey, distance in data.items():
-                # Actual journey distance will be slightly longer than straight-line distance
-                # Calculate this factor based on Google Maps API responses
-                journey_dist = distance[2] * 1.2
+                    # Iterate through each journey
+                    for journey, distance in data.items():
+                        # Actual journey distance will be slightly longer than straight-line distance
+                        # Calculate this factor based on Google Maps API responses
+                        journey_dist = distance[2] * 1.2
 
-                # Time = distance / speed
-                journey_time = journey_dist / modes[mode][1]
+                        # Time = distance / speed
+                        journey_time = journey_dist / modes[mode][1]
 
-                non_api_dist_time[name][mode][journey] = (journey_dist, journey_time)
+                        non_api_dist_time[name][mode][journey] = (journey_dist, journey_time)
 
-                # Find the workplace zone
-                # "other" is a fallback in case the workplace is not in one of our zones
-                workplace = "other"
-                for workplace_name, codes in zone_codes.items():
-                    if journey[1] in codes:
-                        workplace = workplace_name
-                        break
-                
-                # Iterate through each wu03ew mode of transport for the Google Maps API mode of transport
-                for column in modes[mode][0]:
-                    # Check if there are any journeys
-                    if wu03ew[column][journey] > 0:
-                        non_api_journeys_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], wu03ew[column][journey], journey_dist, journey_time])
+                        # Find the workplace zone
+                        # "other" is a fallback in case the workplace is not in one of our zones
+                        workplace = "other"
+                        for workplace_name, codes in zone_codes.items():
+                            if journey[1] in codes:
+                                workplace = workplace_name
+                                break
+                        
+                        # Iterate through each wu03ew mode of transport for the Google Maps API mode of transport
+                        for column in modes[mode][0]:
+                            # Check if there are any journeys
+                            if wu03ew[column][journey] > 0:
+                                non_api_journeys_data.append([name, workplace, wu03ew_modes[column], journey[0], journey[1], wu03ew[column][journey], journey_dist, journey_time])
 
-    # Save the data
-    with open('output/non_api_journeys.csv', 'w', newline='') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerows(non_api_journeys_data)
+            # Save the data
+            with open('output/non_api_journeys.csv', 'w', newline='') as csv_file:
+                writer = csv.writer(csv_file)
+                writer.writerows(non_api_journeys_data)
+    else:
+        get_zone_journeys(modes, "output/journeys/")
