@@ -1,3 +1,5 @@
+# IGNORE THIS PROGRAM
+
 # Program to fix the results from Google Maps API
 # Some of the zones weren't correctly identified and the CSV file isn't in an optimal format
 # This program should fix some of these issues

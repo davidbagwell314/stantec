@@ -1,12 +1,17 @@
+# Program to send API requests to Google based on `output/journeys/`
+
 import requests
 import os
 import json
 import time
+
+# Store the key in `secret.py`
+# This file is ignored so we don't reveal the key to everyone else
 from secret import ROUTES_API_KEY as key
 
 # just to prevent us from accidentally sending more requests
 if True:
-    print("Set boolean to False in \"src\\request.py\", line 8")
+    print("Set condition to False in \"src\\request.py\", line 8")
     exit()
 else:
     journeysPath = "output/journeys/"

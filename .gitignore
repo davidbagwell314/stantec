@@ -1,6 +1,8 @@
 data/*
 !data/MSOA_Dec_2011_PWC_in_England_and_Wales_2022_-7657754233007660732.csv
 !data/SAM_MSOA_DEC_2011_EW.csv
+!data/tra0308.csv
 __pycache__
 .Rproj.user
 src/secret.py
+src/test.py
