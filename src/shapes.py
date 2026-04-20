@@ -1,3 +1,6 @@
+# Script to display maps
+# I.e. if there's anything geographical we want to represent
+
 import os
 import pandas as pd
 import geopandas as gpd
@@ -11,14 +14,15 @@ import numpy as np
 import math
 
 # Name of plot
-PLOT_NAME = "map5"
+PLOT_NAME = "map6"
 
 # Whether to process/render each layer
 ALL_MSOA_BOUNDARIES = True
 ZONE_MSOA = True
 ZONE_MSOA_PWC = True
 TRANSPORT = True
-ZONE_COLOURS = True
+ZONE_COLOURS = False
+JOURNEYS = True
 
 ZONE_LABEL = ZONE_MSOA and not ZONE_MSOA_PWC
 RAIL_NETWORK = TRANSPORT
@@ -36,6 +40,7 @@ MAJOR_ROAD_COLOUR = "#e01818"
 STRATEGIC_ROAD_COLOUR = "#2518e0"
 PWC_COLOUR = "#e0c618"
 EXCLUDE_COLOUR = "#FF0000"
+JOURNEY_COLOUR = "#F5349E"
 
 LINE_SIZE = 0.7
 POINT_SIZE = 4
@@ -150,7 +155,30 @@ if pwc.crs is None or pwc.crs.to_epsg() != 4326:
     pwc = pwc.to_crs(epsg=4326)
 
 # Get positions of each MSOA's PWC
-pwc_pos = dict(zip(pwc['msoa11cd'].to_list(), pwc['geometry'].to_list()))
+pwc_pos: dict[str, shapely.geometry.point.Point] = dict(zip(pwc['msoa11cd'].to_list(), pwc['geometry'].to_list()))
+
+if JOURNEYS:
+    journeys: pd.DataFrame = pd.read_csv("output/api_journeys.csv")
+
+    lines: list[shapely.geometry.LineString] = []
+
+    for row in journeys.itertuples():
+        residence = str(row.residence)
+        workplace = str(row.workplace)
+        if residence in pwc_pos and workplace in pwc_pos:
+            lines.append(shapely.geometry.LineString([pwc_pos[residence], pwc_pos[workplace]]))
+        else:
+            lines.append(shapely.geometry.LineString([]))
+
+    gdf = gpd.GeoDataFrame(journeys, geometry=lines, crs="EPSG:4326")
+
+    categories = gdf['mode'].astype("category")
+    color_map = dict(zip(categories.cat.categories, plt.cm.tab10.colors[:len(categories.cat.categories)]))
+    gdf['color'] = gdf['mode'].map(color_map)
+
+    gdf['size'] = gdf['number'] / gdf['number'].max() * 3
+
+    gdf.plot(ax=ax, color=gdf['color'], linewidth=gdf['size'], zorder=10)
 
 # Plot each GeoDataFrame
 
