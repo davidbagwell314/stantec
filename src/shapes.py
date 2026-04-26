@@ -14,7 +14,7 @@ import numpy as np
 import math
 
 # Name of plot
-PLOT_NAME = "map6"
+PLOT_NAME = "map7"
 
 # Whether to process/render each layer
 ALL_MSOA_BOUNDARIES = True
@@ -22,7 +22,8 @@ ZONE_MSOA = True
 ZONE_MSOA_PWC = True
 TRANSPORT = True
 ZONE_COLOURS = False
-JOURNEYS = True
+JOURNEYS = False
+TRAFFIC_COUNTS = True
 
 ZONE_LABEL = ZONE_MSOA and not ZONE_MSOA_PWC
 RAIL_NETWORK = TRANSPORT
@@ -45,7 +46,7 @@ JOURNEY_COLOUR = "#F5349E"
 LINE_SIZE = 0.7
 POINT_SIZE = 4
 
-ROADS = {'M5': (-3.51565, 50.68052, -2.60899, 51.52884), 'A38': (-3.257, 50.95, -2.591, 51.5), 'A361': (-4.0, 50.0, -2.8, 51.2), 'A370': (-3.0, 51.3, -2.591, 51.5)}
+ROADS = {'M5': (-3.51565, -3.51565, -2.60899, 51.52884), 'A38': (-3.51565, -3.51565, -2.591, 51.5), 'A361': (-4.0, 50.0, -3.2, 51.2), 'A370': (-3.0, 51.25, -2.591, 51.5), 'A396': (-3.55, 50.7, -3.45, 50.9)}
 DELTA = 0.0001
 ZONE_NAMES = {"bridgwater": "Bridgwater", "bristol": "Bristol", "cullompton": "Cullompton", "exeter": "Exeter", "highbridge_and_burnham": "Highbridge and Burnham-on-Sea", "taunton": "Taunton", "tiverton": "Tiverton", "wellington": "Wellington", "weston-super-mare": "Weston-super-Mare"}
 
@@ -179,6 +180,34 @@ if JOURNEYS:
     gdf['size'] = gdf['number'] / gdf['number'].max() * 3
 
     gdf.plot(ax=ax, color=gdf['color'], linewidth=gdf['size'], zorder=10)
+
+if TRAFFIC_COUNTS:
+    counts: pd.DataFrame = pd.read_csv("data/dft_traffic_counts_raw_counts.csv")
+
+    geometry = [shapely.geometry.Point(xy) for xy in zip(counts["longitude"], counts["latitude"])]
+    
+    gdf = gpd.GeoDataFrame(counts, geometry=geometry, crs="EPSG:4326")
+
+    within_zones = []
+
+    for name, zone in zone_data.items():
+        for msoa in zone.itertuples():
+            within_zones.append(gdf[gdf.within(msoa.geometry)])
+
+    connecting_roads = gdf[gdf['road_name'].isin(ROADS)]
+    connecting_roads = connecting_roads[connecting_roads.apply(lambda row: row.geometry.within(bbox[row['road_name']]), axis=1)]
+
+    desired_roads = within_zones
+    desired_roads.append(connecting_roads)
+
+    gdf = gpd.GeoDataFrame(
+        pd.concat(desired_roads).drop_duplicates().reset_index(drop=True),
+        crs=gdf.crs
+    )
+
+    print(gdf.head())
+
+    gdf.plot(ax=ax, color=JOURNEY_COLOUR, edgecolor='black', markersize=POINT_SIZE, linewidth=0.1 * POINT_SIZE, zorder=11)
 
 # Plot each GeoDataFrame
 

@@ -5,7 +5,7 @@ import duckdb
 import csv
 import pandas as pd
 
-road = 'M5' # replace with other roads (i.e. 'A38')
+road = 'all' # replace with other roads (i.e. 'A38')
 
 csv_src = 'data/dft_traffic_counts_raw_counts.csv'
 csv_dest = f'data/{road.lower()}_traffic.csv'
@@ -25,7 +25,7 @@ schema = {col: "VARCHAR" for col in header}
 con.execute(
     f"""COPY (SELECT * 
         FROM read_csv_auto('{csv_src}', columns={schema})
-        WHERE road_name = '{road}' AND region_id = '1' AND year >= '2022')
+        WHERE local_authority_id IN ('115', '70', '183', '5', '143', '71', '144') AND year >= '2022')
         TO '{csv_dest}'
         WITH (HEADER, DELIMITER ',')
     """
