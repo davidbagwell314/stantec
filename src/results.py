@@ -12,7 +12,7 @@ import csv
 import os
 
 # What data to visualise
-RESULT_TYPE = 5
+RESULT_TYPE = 4
 
 def get_journeys(remove_outliers: bool = False, msoa_journey: bool = True, residence_zones: list[str] = [], workplace_zones: list[str] = [], modes: list[str] = []) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     # Get distances and journey times for different journeys and modes of transport
@@ -202,34 +202,29 @@ if __name__ == "__main__":
                         car_row = tuple(this_car.iloc[i])
 
                         car_total += car_row[5]
-                        car_cost += car_row[7] / 60.0
-                    
-                    for i in range(num_car):
-                        car_row = tuple(this_car.iloc[i])
+                        car_cost += (car_row[7] / 60.0) * car_row[5]
 
-                        car_total += car_row[5]
-                        car_cost += car_row[7] / 60.0
 
                     for i in range(num_pt):
                         pt_row = tuple(this_pt.iloc[i])
 
                         pt_total += pt_row[5]
-                        pt_cost += pt_row[7] / 60.0
+                        pt_cost += (pt_row[7] / 60.0) * pt_row[5]
                     
                     for i in range(num_other):
                         other_row = tuple(this_other.iloc[i])
 
                         other_total += other_row[5]
-                        other_cost += other_row[7] / 60.0
+                        other_cost += (other_row[7] / 60.0) * other_row[5]
 
-                    if num_pt > 0 and num_car > 0:
-                        results.append([zone_org, zone_dest, pt_cost / num_pt, car_cost / num_car])
+                    if pt_total > 0 and car_total > 0:
+                        results.append([zone_org, zone_dest, pt_cost / pt_total, car_cost / car_total, pt_total, car_total, pt_total + car_total])
                         proportions.append([100.0 * pt_total / (pt_total + car_total)])
-                    elif num_pt > 0:
-                        results.append([zone_org, zone_dest, pt_cost / num_pt, 0.0])
+                    elif pt_total > 0:
+                        results.append([zone_org, zone_dest, pt_cost / pt_total, 0.0, pt_total, car_total, pt_total + car_total])
                         proportions.append([100.0])
-                    elif num_car > 0:
-                        results.append([zone_org, zone_dest, 0.0, car_cost / num_car])
+                    elif car_total > 0:
+                        results.append([zone_org, zone_dest, 0.0, car_cost / car_total, pt_total, car_total, pt_total + car_total])
                         proportions.append([0.0])
 
 
